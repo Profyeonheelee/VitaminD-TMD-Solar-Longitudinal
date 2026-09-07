@@ -3,137 +3,103 @@ R code for a longitudinal study of vitamin D and clinical outcomes in temporoman
 # Vitamin D, Solar Radiation, and Longitudinal TMD Outcomes
 
 R code accompanying the study:
-
 > **Vitamin D Prescription, Solar Radiation, and Longitudinal Pain Outcomes in Temporomandibular Disorders**
 
-This repository contains the analysis and figure-generation code used to examine longitudinal relationships among recorded vitamin D prescription, ambient solar radiation, serum 25-hydroxyvitamin D [25(OH)D], present TMD-related pain intensity, and mandibular opening in patients with temporomandibular disorders (TMD).
+This repository contains the analysis code used to examine longitudinal
+relationships among recorded vitamin D prescription, ambient solar radiation,
+serum 25-hydroxyvitamin D [25(OH)D], present TMD-related pain intensity, and
+mandibular opening in patients with temporomandibular disorders (TMD).
 
-## Study overview
+## Software
 
-The retrospective longitudinal cohort included 241 patients with TMD and repeated serum 25(OH)D measurements. Participants were classified according to baseline vitamin D status and recorded vitamin D prescription:
-
-- **Group 1:** vitamin D-sufficient, no prescription (`n = 41`)
-- **Group 2:** low vitamin D, no prescription (`n = 51`)
-- **Group 3:** low vitamin D, prescribed vitamin D (`n = 149`)
-
-The primary prescription-associated analysis compared Groups 2 and 3 using propensity-score overlap weighting. Additional analyses evaluated longitudinal biochemical and clinical outcomes, date-linked ambient solar radiation, vitamin D status transitions, and clinical correlates of pain intensity.
-
-The principal finding was a clear prescription-associated biochemical signal without corresponding clear evidence of improvement in TMD-related pain or mandibular opening. Ambient solar radiation was consistently associated with serum 25(OH)D but not with pain.
-
-## Repository contents
-
-```text
-VitaminD-TMD-Longitudinal/
-├── R/
-│   ├── 01_figure_1_study_design.R
-│   ├── 02_figure_2_longitudinal_patterns.R
-│   ├── 03_figure_3_followup_duration.R
-│   ├── 04_figure_4_pain_correlates.R
-│   ├── 05_supplementary_figure_s1_individual_trajectories.R
-│   ├── 06_supplementary_figure_s2_vitamin_d_status.R
-│   ├── 07_supplementary_figure_s3_overlap_weighting.R
-│   ├── 08_supplementary_figure_s4_clinical_features.R
-│   └── 09_supplementary_figure_s5_environmental_sensitivity.R
-├── data/
-│   └── README.md
-├── outputs/
-│   └── .gitkeep
-├── run_all_figures.R
-└── README.md
-```
-
-| Script | Output |
-|---|---|
-| `01_figure_1_study_design.R` | Study design and longitudinal environmental-exposure framework |
-| `02_figure_2_longitudinal_patterns.R` | Longitudinal serum 25(OH)D patterns, ambient solar radiation, and pain improvement |
-| `03_figure_3_followup_duration.R` | Follow-up duration and longitudinal changes among prescribed patients |
-| `04_figure_4_pain_correlates.R` | Clinical, biochemical, and environmental correlates of pain intensity |
-| `05_supplementary_figure_s1_individual_trajectories.R` | Individual serum 25(OH)D and pain trajectories |
-| `06_supplementary_figure_s2_vitamin_d_status.R` | Vitamin D status transitions |
-| `07_supplementary_figure_s3_overlap_weighting.R` | Propensity-score distribution and covariate balance |
-| `08_supplementary_figure_s4_clinical_features.R` | Baseline serum 25(OH)D and TMD-related clinical features |
-| `09_supplementary_figure_s5_environmental_sensitivity.R` | Sensitivity analyses of environmental-exposure windows |
-
-## Software requirements
-
-The analyses were developed using **R 4.5.1**. Required packages are:
+The analyses were developed for R 4.5.1. Required packages are:
 
 ```r
 install.packages(c(
-  "readxl",
-  "dplyr",
-  "tidyr",
-  "ggplot2",
-  "patchwork",
-  "sandwich",
-  "openxlsx"
+  "readxl", "dplyr", "tidyr", "ggplot2", "patchwork",
+  "sandwich", "openxlsx", "survey"
 ))
 ```
 
-## Data requirements
+## Data
 
-The analysis dataset is not included in this repository. To run the code, place the analysis workbook at:
+Place the analysis workbook at:
 
 ```text
 data/Paper1_VitaminD_TMD_Longitudinal_KMA_Solar_Merged.xlsx
 ```
 
-The workbook must contain a worksheet named `Analysis_Data`. Each script checks the variables required for its analysis before proceeding.
+The workbook must contain a worksheet named `Analysis_Data`. The analysis
+dataset is not included in this repository.
 
-Meteorological exposures were derived from publicly available Korea Meteorological Administration data for Seoul Automated Synoptic Observing System station 108. The primary environmental exposure was mean daily total solar radiation during the 60 days preceding each serum sampling date; 90-day windows and sunshine-duration measures were evaluated in sensitivity analyses.
+## Scripts
 
-## Running the code
+### Tables
 
-Clone or download the repository, open R in the repository root, and install the required packages. To generate every figure in manuscript order, run:
+| Script | Output |
+|---|---|
+| `R/10_table_1_baseline_characteristics.R` | Table 1: baseline characteristics and follow-up timing |
+| `R/11_table_2_unadjusted_longitudinal_outcomes.R` | Table 2: unadjusted longitudinal biochemical and clinical outcomes |
+| `R/12_table_3_adjusted_clinical_outcomes.R` | Table 3: adjusted longitudinal clinical outcomes |
+| `R/13_table_4_overlap_weighted_outcomes.R` | Table 4: overlap-weighted prescription-associated outcomes |
+| `R/14_table_5_baseline_clinical_features.R` | Table 5: baseline serum 25(OH)D and TMD-related clinical features |
+| `R/15_table_6_solar_radiation_associations.R` | Table 6: solar-radiation associations with biochemical and pain outcomes |
+| `R/16_table_7_vitamin_d_change_and_pain.R` | Table 7: longitudinal change in serum 25(OH)D and pain improvement |
+
+### Figures
+
+| Script | Output |
+|---|---|
+| `R/01_figure_1_study_design.R` | Figure 1: study design and environmental-exposure framework |
+| `R/02_figure_2_longitudinal_patterns.R` | Figure 2: longitudinal 25(OH)D patterns, solar radiation, and pain improvement |
+| `R/03_figure_3_followup_duration.R` | Figure 3: follow-up duration and longitudinal changes |
+| `R/04_figure_4_pain_correlates.R` | Figure 4: correlates of pain intensity |
+| `R/05_supplementary_figure_s1_individual_trajectories.R` | Supplementary Figure S1: individual trajectories |
+| `R/06_supplementary_figure_s2_vitamin_d_status.R` | Supplementary Figure S2: vitamin D status transitions |
+| `R/07_supplementary_figure_s3_overlap_weighting.R` | Supplementary Figure S3: overlap-weighting diagnostics |
+| `R/08_supplementary_figure_s4_clinical_features.R` | Supplementary Figure S4: baseline 25(OH)D and TMD-related clinical features |
+| `R/09_supplementary_figure_s5_environmental_sensitivity.R` | Supplementary Figure S5: environmental-exposure sensitivity analyses |
+
+Run scripts from the repository root. Each script checks its required columns
+before analysis. Table scripts write manuscript-formatted Excel and CSV files,
+together with analysis-audit sheets, to `outputs/tables/`. Figure scripts write
+PNG, TIFF, PDF, and analysis-audit files to their own subdirectories under
+`outputs/`.
+
+To regenerate all tables, run:
+
+```r
+source("run_all_tables.R")
+```
+
+To regenerate all figures, run:
 
 ```r
 source("run_all_figures.R")
 ```
 
-Individual figures can be generated separately. For example:
+To regenerate all tables and figures, run:
 
 ```r
-source("R/02_figure_2_longitudinal_patterns.R")
+source("run_all.R")
 ```
 
-Each script writes publication-resolution PNG, TIFF, and PDF files, together with the corresponding statistical audit workbook where applicable, to a dedicated directory under `outputs/`.
+Figure 1 uses the manuscript-verified cohort counts and does not read the
+patient-level workbook. Supplementary Figure S5 uses 500 bootstrap samples per
+model and therefore takes longer than the other scripts.
 
-Figure 1 uses manuscript-verified cohort counts and does not require access to patient-level data. Supplementary Figure S5 uses bootstrap resampling and may take longer to complete than the other scripts.
+## Terminology
 
-## Terminology and variable mapping
+**PFO** and **MUO** denote pain-free opening and maximum unassisted opening,
+respectively, in accordance with DC/TMD terminology. **Self-reported bruxism**
+denotes bruxism-related behavior assessed using a single patient-reported
+yes/no item rather than a formal clinical or instrumental diagnosis.
 
-- **VAS** refers to present TMD-related pain intensity recorded using the clinic's 0–10 visual analog scale.
-- **PFO** refers to pain-free opening, following DC/TMD terminology.
-- **MUO** refers to maximum unassisted opening, following DC/TMD terminology.
-- **Self-reported bruxism** refers to bruxism-related behavior assessed using a single patient-reported yes/no item and not to a formal clinical or instrumental diagnosis.
+## Statistical notes
 
-## Statistical framework
+The scripts preserve the specifications described in the manuscript,
+including HC3 heteroskedasticity-robust standard errors, Holm correction for
+prespecified pairwise comparisons, Benjamini–Hochberg false-discovery-rate
+correction for exploratory analysis families, and outcome-specific complete
+case analysis without imputation.
 
-The scripts reproduce the specifications described in the manuscript, including:
-
-- propensity-score overlap weighting for the primary comparison within the baseline-low-vitamin-D cohort;
-- HC3 heteroskedasticity-robust standard errors for adjusted regression models;
-- modified Poisson regression with robust standard errors for binary pain-response outcomes;
-- Holm correction for prespecified pairwise group comparisons;
-- Benjamini-Hochberg false-discovery-rate correction for exploratory analysis families; and
-- outcome-specific complete-case analysis without imputation.
-
-Longitudinal change in serum 25(OH)D and environmental exposure was calculated as follow-up minus baseline. Pain reduction was calculated as baseline minus follow-up VAS, so positive values indicate improvement.
-
-## Reproducibility notes
-
-This repository is organized to preserve a direct correspondence between the manuscript figures and R scripts.
-
-## Data and code availability
-
-Meteorological data are publicly available through the [Korea Meteorological Administration Open MET Data Portal](https://data.kma.go.kr/data/grnd/selectAsosRltmList.do?pgmNo=36).
-
-Clinical and laboratory data may be made available by the corresponding author upon reasonable request, subject to institutional and ethical requirements.
-
-## Citation
-
-If you use this code, please cite the associated article. Full citation details will be added following publication.
-
-## Contact
-
-For questions regarding the code or study, please contact the corresponding author through the contact information provided in the article.
