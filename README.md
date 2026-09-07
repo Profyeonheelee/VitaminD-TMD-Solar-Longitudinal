@@ -1,5 +1,3 @@
-# VitaminD-TMD-Solar-Longitudinal
-R code for a longitudinal study of vitamin D and clinical outcomes in temporomandibular disorders.
 # Vitamin D, Solar Radiation, and Longitudinal TMD Outcomes
 
 R code accompanying the study:
